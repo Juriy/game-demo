@@ -1,0 +1,82 @@
+body {
+  font-family: "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  outline: none;
+  font-size: 1.0rem;
+  padding: 0 5px;
+}
+
+button {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding: 3px 15px;
+  color: white;
+  line-height: 25px;
+  background-color: #00bcd4;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+  transition: all 150ms ease-in;
+  outline: none;
+}
+
+button:hover {
+  background-color: #79d7e4;
+}
+
+button.turn:hover {
+  background-color: #eaeaea;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid lightgrey;
+  overflow-y: scroll;
+}
+
+li {
+  padding: 10px 10px 10px 10px;
+}
+
+canvas {
+  display: block;
+  border: 5px dotted indianred;
+  margin: 10px auto;
+}
+
+.controls-wrapper {
+  background-color: rgb(255, 255, 255);
+  width: 400px;
+  margin: 20px auto;
+  border: 1px solid lightgrey;
+}
+
+.chat-wrapper {
+  padding: 10px;
+}
+
+.chat-wrapper form {
+  display: flex;
+}
+
+.chat-wrapper form input {
+  font-size: 1.0rem;
+  margin: 0 10px 0 0;
+  padding: 0 5px;
+  flex-grow: 1;
+}
+
+.chat-wrapper form button {
+  width: 80px;
+}
+
+#events {
+  height: 150px;
+}
