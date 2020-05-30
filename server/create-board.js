@@ -13,6 +13,7 @@ const createBoard = (size) => {
 
   const getBoard = () => board;
 
+  clear();
   return {
     makeTurn,
     getBoard,
