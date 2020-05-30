@@ -16,20 +16,39 @@ const log = (text) => {
   parent.scrollTop = parent.scrollHeight;
 };
 
-const onChatSubmitted = (e) => {
+const onChatSubmitted = (sock) => (e) => {
   e.preventDefault();
 
   const input = document.querySelector('#chat');
   const text = input.value;
   input.value = '';
 
-  log(text);
+  sock.emit('message', text);
 };
 
+const createBoard = (canvas) => {
+  const ctx = canvas.getContext('2d');
+
+  const fillRect = (x, y, color) => {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, 20, 20);
+  };
+
+  return { fillRect };
+};
+
+
 (() => {
-  log('welcome');
+
+  const sock = io();
+  const canvas = document.querySelector('canvas');
+  const { fillRect } = createBoard(canvas);
+
+  fillRect(50, 50);
+  
+  sock.on('message', log);
 
   document
     .querySelector('#chat-form')
-    .addEventListener('submit', onChatSubmitted);
+    .addEventListener('submit', onChatSubmitted(sock));
 })();
