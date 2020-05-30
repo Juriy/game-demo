@@ -17,12 +17,6 @@ const onChatSubmitted = (e) => {
   log(text);
 };
 
-const randomColor = () => {
-  const maxColors = 16777215;
-  const value = Math.floor(Math.random()*maxColors).toString(16);
-  return `#${value}`;
-};
-
 (() => {
   log('welcome');
 
