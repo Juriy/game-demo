@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "A tiny gamedev demo",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -13,10 +13,16 @@
     "Game",
     "Socket.IO"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Juriy/game-demo.git"
+  },
   "author": "Juriy Bura <juriy.bura@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "randomcolor": "^0.5.4",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

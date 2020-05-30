@@ -1,7 +1,11 @@
 const createBoard = (size) => {
 
   // two-dimensional array filled with nulls
-  const board = Array(size).fill().map(() => Array(size).fill(null));
+  let board;
+
+  const clear = () => {
+    board = Array(size).fill().map(() => Array(size).fill(null))
+  };
 
   const makeTurn = (x, y, value) => {
     board[y][x] = value;
@@ -11,7 +15,8 @@ const createBoard = (size) => {
 
   return {
     makeTurn,
-    getBoard
+    getBoard,
+    clear
   }
 };
 
