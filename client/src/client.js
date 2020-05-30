@@ -1,4 +1,4 @@
-const writeEvent = (text) => {
+const log = (text) => {
   const parent = document.querySelector('#events');
   const el = document.createElement('li');
   el.innerHTML = text;
@@ -14,11 +14,11 @@ const onChatSubmitted = (e) => {
   const text = input.value;
   input.value = '';
 
-  writeEvent(text);
+  log(text);
 };
 
 (() => {
-  writeEvent('welcome');
+  log('welcome');
 
   document
     .querySelector('#chat-form')
