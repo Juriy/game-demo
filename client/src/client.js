@@ -31,7 +31,7 @@ const createBoard = (canvas) => {
 
   const fillRect = (x, y, color) => {
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, 20, 20);
+    ctx.fillRect(x - 10, y - 10, 20, 20);
   };
 
   return { fillRect };
@@ -44,11 +44,17 @@ const createBoard = (canvas) => {
   const canvas = document.querySelector('canvas');
   const { fillRect } = createBoard(canvas);
 
-  fillRect(50, 50);
-  
+  const onClick = (e) => {
+    const { x, y } = getClickCoordinates(canvas, e);
+    sock.emit('turn', { x, y });
+  };
+
   sock.on('message', log);
+  sock.on('turn', ({ x, y, color }) => fillRect(x, y, color));
 
   document
     .querySelector('#chat-form')
     .addEventListener('submit', onChatSubmitted(sock));
+
+  canvas.addEventListener('click', onClick);
 })();
