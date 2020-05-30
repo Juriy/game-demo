@@ -31,9 +31,9 @@ const createBoard = (canvas, numCells = 20) => {
 
   const cellSize = Math.floor(400/numCells);
 
-  const fillRect = (x, y, color) => {
+  const fillCell = (x, y, color) => {
     ctx.fillStyle = color;
-    ctx.fillRect(x - 10, y - 10, 20, 20);
+    ctx.fillRect(x*cellSize, y*cellSize, 20, 20);
   };
 
   const clear = () => {
@@ -54,12 +54,26 @@ const createBoard = (canvas, numCells = 20) => {
     ctx.stroke();
   };
 
-  const reset = () => {
-    clear();
-    drawGrid();
+  const drawBoard = (board) => {
+    board.forEach((row, y) => {
+      row.forEach((color, x) => {
+        color && fillCell(x, y, color);
+      })
+    })
   };
 
-  return { fillRect, reset };
+  const reset = (board = []) => {
+    clear();
+    drawGrid();
+    drawBoard(board);
+  };
+
+  const getCellCoordinates = (x, y) => ({
+    x: Math.floor(x/cellSize),
+    y: Math.floor(y/cellSize)
+  });
+
+  return { fillCell, reset, getCellCoordinates };
 };
 
 
@@ -67,17 +81,16 @@ const createBoard = (canvas, numCells = 20) => {
 
   const sock = io();
   const canvas = document.querySelector('canvas');
-  const { fillRect, reset } = createBoard(canvas);
+  const { fillCell, reset, getCellCoordinates } = createBoard(canvas);
 
   const onClick = (e) => {
     const { x, y } = getClickCoordinates(canvas, e);
-    sock.emit('turn', { x, y });
+    sock.emit('turn', getCellCoordinates(x, y));
   };
 
-  reset();
-
   sock.on('message', log);
-  sock.on('turn', ({ x, y, color }) => fillRect(x, y, color));
+  sock.on('turn', ({ x, y, color }) => fillCell(x, y, color));
+  sock.on('board', reset);
 
   document
     .querySelector('#chat-form')
