@@ -31,6 +31,7 @@ io.on('connection', (sock) => {
         sock.emit('message', 'YOU WIN');
         io.emit('message', 'new round');
         clear();
+        io.emit('board');
       }
     }
   };
