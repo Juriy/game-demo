@@ -79,6 +79,8 @@ const createBoard = (canvas, numCells = 20) => {
 
 (() => {
 
+  log('chat is disabled on this server');
+
   const sock = io();
   const canvas = document.querySelector('canvas');
   const { fillCell, reset, getCellCoordinates } = createBoard(canvas);
