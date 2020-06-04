@@ -2,11 +2,7 @@ const http = require('http');
 const express = require('express');
 
 const app = express();
-const clientPath = `${__dirname}/../client`;
-
-console.log(`serving static from ${clientPath}`);
-
-app.use(express.static(clientPath));
+app.use(express.static(`${__dirname}/../client`));
 
 const server = http.createServer(app);
 

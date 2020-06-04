@@ -1,12 +1,3 @@
-const getClickCoordinates = (element, event) => {
-  const { top, left } = element.getBoundingClientRect();
-  const { clientX, clientY } = event;
-  return {
-    x: clientX - left,
-    y: clientY - top
-  };
-};
-
 const log = (text) => {
   const parent = document.querySelector('#events');
   const el = document.createElement('li');
