@@ -19,9 +19,7 @@
   },
   "author": "Juriy Bura <juriy.bura@gmail.com>",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "nodemon": "^2.0.4"
   }
