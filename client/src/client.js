@@ -7,20 +7,23 @@ const log = (text) => {
   parent.scrollTop = parent.scrollHeight;
 };
 
-const onChatSubmitted = (e) => {
+const onChatSubmitted = (sock) => (e) => {
   e.preventDefault();
 
   const input = document.querySelector('#chat');
   const text = input.value;
   input.value = '';
 
-  log(text);
+  sock.emit('message', text);
 };
 
 (() => {
-  log('welcome');
+
+  const sock = io();
+
+  sock.on('message', log);
 
   document
     .querySelector('#chat-form')
-    .addEventListener('submit', onChatSubmitted);
+    .addEventListener('submit', onChatSubmitted(sock));
 })();
