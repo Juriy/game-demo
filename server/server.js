@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
+const randomColor = require('randomcolor');
 
 const app = express();
 
@@ -10,10 +11,11 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', (sock) => {
+  const color = randomColor();
   sock.emit('message', 'You are connected');
 
   sock.on('message', (text) => io.emit('message', text));
-  sock.on('turn', ({ x, y }) => io.emit('turn', { x, y }));
+  sock.on('turn', ({ x, y }) => io.emit('turn', { x, y, color }));
 });
 
 server.on('error', (err) => {

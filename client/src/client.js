@@ -27,31 +27,65 @@ const getClickCoordinates = (element, ev) => {
   };
 };
 
-const getBoard = (canvas) => {
+const getBoard = (canvas, numCells = 20) => {
 
   const ctx = canvas.getContext('2d');
+  const cellSize = Math.floor(canvas.width/numCells);
 
-  const fillRect = (x, y, color) => {
+  const fillCell = (x, y, color) => {
     ctx.fillStyle = color;
-    ctx.fillRect(x - 10, y - 10, 20, 20);
+    ctx.fillRect(x*cellSize, y*cellSize, cellSize, cellSize);
   };
 
-  return { fillRect };
+  const drawGrid = () => {
+
+    ctx.strokeStyle = '#333';
+    ctx.beginPath();
+
+    for (let i = 0; i < numCells + 1; i++) {
+      ctx.moveTo(i*cellSize, 0);
+      ctx.lineTo(i*cellSize, cellSize*numCells);
+
+      ctx.moveTo(0, i*cellSize);
+      ctx.lineTo(cellSize*numCells, i*cellSize);
+    }
+
+    ctx.stroke();
+  };
+
+  const clear = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
+
+  const reset = () => {
+    clear();
+    drawGrid();
+  };
+
+  const getCellCoordinates = (x, y) => {
+    return {
+      x: Math.floor(x/cellSize),
+      y: Math.floor(y/cellSize)
+    };
+  };
+
+  return { fillCell, reset, getCellCoordinates };
 };
 
 (() => {
 
   const canvas = document.querySelector('canvas');
-  const { fillRect } = getBoard(canvas);
+  const { fillCell, reset, getCellCoordinates } = getBoard(canvas);
   const sock = io();
 
   const onClick = (e) => {
     const { x, y } = getClickCoordinates(canvas, e);
-    sock.emit('turn', { x, y });
+    sock.emit('turn', getCellCoordinates(x, y));
   };
 
+  reset();
   sock.on('message', log);
-  sock.on('turn', ({ x, y }) => fillRect(x, y));
+  sock.on('turn', ({ x, y, color }) => fillCell(x, y, color));
 
   document
     .querySelector('#chat-form')
